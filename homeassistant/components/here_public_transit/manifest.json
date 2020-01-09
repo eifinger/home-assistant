@@ -1,0 +1,13 @@
+{
+    "domain": "here_public_transit",
+    "name": "HERE Public Transit",
+    "documentation": "https://www.home-assistant.io/integrations/here_public_transit",
+    "requirements": [
+      "herepy==2.0.1",
+      "isodate==0.6.0"
+    ],
+    "dependencies": [],
+    "codeowners": [
+      "@eifinger"
+    ]
+  }
