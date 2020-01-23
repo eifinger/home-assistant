@@ -849,6 +849,9 @@ kiwiki-client==0.1.1
 # homeassistant.components.konnected
 konnected==1.2.0
 
+# homeassistant.components.kraken
+krakenex==2.1.0
+
 # homeassistant.components.eufy
 lakeside==0.12
 
@@ -1471,6 +1474,9 @@ pykira==0.1.1
 
 # homeassistant.components.kodi
 pykodi==0.2.1
+
+# homeassistant.components.kraken
+pykrakenapi==0.1.8
 
 # homeassistant.components.kulersky
 pykulersky==0.4.0

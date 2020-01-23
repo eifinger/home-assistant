@@ -1,0 +1,13 @@
+{
+  "domain": "kraken",
+  "name": "Kraken",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/kraken",
+  "requirements": [
+    "krakenex==2.1.0",
+    "pykrakenapi==0.1.8"
+  ],
+  "codeowners": [
+    "@eifinger"
+  ]
+}

@@ -110,6 +110,7 @@ FLOWS = [
     "juicenet",
     "kodi",
     "konnected",
+    "kraken",
     "kulersky",
     "life360",
     "lifx",
