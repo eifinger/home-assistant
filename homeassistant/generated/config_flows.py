@@ -85,6 +85,7 @@ FLOWS = [
     "hangouts",
     "harmony",
     "heos",
+    "here_weather",
     "hisense_aehw4a1",
     "hlk_sw16",
     "home_connect",
