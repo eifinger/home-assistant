@@ -145,11 +145,6 @@ def sensor_descriptions(travel_mode: str) -> tuple[SensorEntityDescription, ...]
             key=ATTR_DISTANCE,
             state_class=SensorStateClass.MEASUREMENT,
         ),
-        SensorEntityDescription(
-            name="Route",
-            icon="mdi:directions",
-            key=ATTR_ROUTE,
-        ),
     )
 
 
@@ -196,6 +191,7 @@ async def async_setup_entry(
                 coordinator,
             )
         )
+    sensors.append(RouteSensor(entry_id, name, coordinator))
     sensors.append(OriginSensor(entry_id, name, coordinator))
     sensors.append(DestinationSensor(entry_id, name, coordinator))
     async_add_entities(sensors)
@@ -300,4 +296,47 @@ class DestinationSensor(HERETravelTimeSensor):
                 ATTR_LATITUDE: self.coordinator.data[ATTR_DESTINATION].split(",")[0],
                 ATTR_LONGITUDE: self.coordinator.data[ATTR_DESTINATION].split(",")[1],
             }
+        return None
+
+
+class RouteSensor(HERETravelTimeSensor):
+    """Sensor holding information about the route."""
+
+    def __init__(
+        self,
+        unique_id_prefix: str,
+        name: str,
+        coordinator: HereTravelTimeDataUpdateCoordinator,
+    ) -> None:
+        """Initialize the sensor."""
+        sensor_description = SensorEntityDescription(
+            name="Route",
+            icon="mdi:directions",
+            key=ATTR_ROUTE,
+        )
+        super().__init__(unique_id_prefix, name, sensor_description, coordinator)
+
+    def _truncate_route(self, route: str) -> str:
+        """Truncate route to 255 chars or less.
+
+        Route segments are separated by semicolon.
+        e.g: US-29 - K St NW; US-29 - Whitehurst Fwy; I-495 N - Capital Beltway
+
+        The leading route segments will be removed until the route is shorter than 256 chars.
+        """
+        if len(route) > 255:
+            _LOGGER.debug(
+                "Route %s is too long. It will be truncated to 255 chars", route
+            )
+            while len(route) > 255:
+                route = route.split("; ", 1)[1]  # Remove the first route segment
+        return route
+
+    @property
+    def native_value(self) -> str | float | None:
+        """Return the state of the sensor."""
+        if self.coordinator.data is not None:
+            return self._truncate_route(
+                self.coordinator.data.get(self.entity_description.key)
+            )
         return None
