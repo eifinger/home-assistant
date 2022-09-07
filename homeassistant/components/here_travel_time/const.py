@@ -1,9 +1,4 @@
 """Constants for the HERE Travel Time integration."""
-from homeassistant.const import (
-    CONF_UNIT_SYSTEM,
-    CONF_UNIT_SYSTEM_IMPERIAL,
-    CONF_UNIT_SYSTEM_METRIC,
-)
 
 DOMAIN = "here_travel_time"
 DEFAULT_SCAN_INTERVAL = 300
@@ -65,15 +60,12 @@ ICONS = {
     TRAVEL_MODE_TRUCK: ICON_TRUCK,
 }
 
-UNITS = [CONF_UNIT_SYSTEM_METRIC, CONF_UNIT_SYSTEM_IMPERIAL]
-
 ATTR_DURATION = "duration"
 ATTR_DISTANCE = "distance"
 ATTR_ROUTE = "route"
 ATTR_ORIGIN = "origin"
 ATTR_DESTINATION = "destination"
 
-ATTR_UNIT_SYSTEM = CONF_UNIT_SYSTEM
 ATTR_TRAFFIC_MODE = CONF_TRAFFIC_MODE
 
 ATTR_DURATION_IN_TRAFFIC = "duration_in_traffic"

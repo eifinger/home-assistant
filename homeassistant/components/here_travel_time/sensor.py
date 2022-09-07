@@ -23,6 +23,7 @@ from homeassistant.const import (
     CONF_MODE,
     CONF_NAME,
     CONF_UNIT_SYSTEM,
+    LENGTH_KILOMETERS,
     TIME_MINUTES,
 )
 from homeassistant.core import HomeAssistant
@@ -144,6 +145,7 @@ def sensor_descriptions(travel_mode: str) -> tuple[SensorEntityDescription, ...]
             icon=ICONS.get(travel_mode, ICON_CAR),
             key=ATTR_DISTANCE,
             state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=LENGTH_KILOMETERS,
         ),
         SensorEntityDescription(
             name="Route",

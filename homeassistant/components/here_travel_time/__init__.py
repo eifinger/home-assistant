@@ -13,9 +13,6 @@ from homeassistant.const import (
     ATTR_ATTRIBUTION,
     CONF_API_KEY,
     CONF_MODE,
-    CONF_UNIT_SYSTEM,
-    CONF_UNIT_SYSTEM_IMPERIAL,
-    LENGTH_METERS,
     Platform,
 )
 from homeassistant.core import HomeAssistant
@@ -23,7 +20,6 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.location import find_coordinates
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt
-from homeassistant.util.unit_system import IMPERIAL_SYSTEM
 
 from .const import (
     ATTR_DESTINATION,
@@ -81,7 +77,6 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
         origin_entity_id=config_entry.data.get(CONF_ORIGIN_ENTITY_ID),
         travel_mode=config_entry.data[CONF_MODE],
         route_mode=config_entry.options[CONF_ROUTE_MODE],
-        units=config_entry.options[CONF_UNIT_SYSTEM],
         arrival=arrival,
         departure=departure,
     )
@@ -178,12 +173,8 @@ class HereTravelTimeDataUpdateCoordinator(DataUpdateCoordinator):
             traffic_time: float = summary["baseTime"]
             if self.config.travel_mode in TRAVEL_MODES_VEHICLE:
                 traffic_time = summary["trafficTime"]
-            if self.config.units == CONF_UNIT_SYSTEM_IMPERIAL:
-                # Convert to miles.
-                distance = IMPERIAL_SYSTEM.length(distance, LENGTH_METERS)
-            else:
-                # Convert to kilometers
-                distance = distance / 1000
+            # Convert to kilometers
+            distance = distance / 1000
             return HERERoutingData(
                 {
                     ATTR_ATTRIBUTION: attribution,

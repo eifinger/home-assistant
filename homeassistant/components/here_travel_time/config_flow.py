@@ -15,7 +15,6 @@ from homeassistant.const import (
     CONF_LONGITUDE,
     CONF_MODE,
     CONF_NAME,
-    CONF_UNIT_SYSTEM,
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
@@ -45,7 +44,6 @@ from .const import (
     TRAVEL_MODE_CAR,
     TRAVEL_MODE_PUBLIC_TIME_TABLE,
     TRAVEL_MODES,
-    UNITS,
 )
 from .sensor import (
     CONF_DESTINATION_ENTITY_ID,
@@ -138,7 +136,6 @@ def default_options(hass: HomeAssistant) -> dict[str, str | None]:
         CONF_ROUTE_MODE: ROUTE_MODE_FASTEST,
         CONF_ARRIVAL_TIME: None,
         CONF_DEPARTURE_TIME: None,
-        CONF_UNIT_SYSTEM: hass.config.units.name,
     }
 
 
@@ -374,12 +371,6 @@ class HERETravelTimeOptionsFlow(config_entries.OptionsFlow):
                         CONF_ROUTE_MODE, ROUTE_MODE_FASTEST
                     ),
                 ): vol.In(ROUTE_MODES),
-                vol.Optional(
-                    CONF_UNIT_SYSTEM,
-                    default=self.config_entry.options.get(
-                        CONF_UNIT_SYSTEM, self.hass.config.units.name
-                    ),
-                ): vol.In(UNITS),
             }
         )
 

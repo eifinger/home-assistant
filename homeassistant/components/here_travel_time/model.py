@@ -32,6 +32,5 @@ class HERETravelTimeConfig:
     origin_entity_id: str | None
     travel_mode: str
     route_mode: str
-    units: str
     arrival: time | None
     departure: time | None
