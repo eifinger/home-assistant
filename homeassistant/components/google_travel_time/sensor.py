@@ -7,7 +7,12 @@ import logging
 from googlemaps import Client
 from googlemaps.distance_matrix import distance_matrix
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     ATTR_ATTRIBUTION,
@@ -15,6 +20,7 @@ from homeassistant.const import (
     CONF_MODE,
     CONF_NAME,
     EVENT_HOMEASSISTANT_STARTED,
+    LENGTH_KILOMETERS,
     TIME_MINUTES,
 )
 from homeassistant.core import CoreState, HomeAssistant
@@ -35,11 +41,55 @@ from .const import (
     CONF_UNITS,
     DEFAULT_NAME,
     DOMAIN,
+    ICONS,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = timedelta(minutes=5)
+
+
+def sensor_descriptions(travel_mode: str) -> tuple[SensorEntityDescription, ...]:
+    """Construct SensorEntityDescriptions."""
+    return (
+        SensorEntityDescription(
+            name="Destination adresses",
+            icon="mdi:store-marker",
+            key="",
+        ),
+        SensorEntityDescription(
+            name="Origin adresses",
+            icon="mdi:store-marker",
+            key="",
+        ),
+        SensorEntityDescription(
+            name="Status",
+            icon="mdi:list-status",
+            key="",
+        ),
+        SensorEntityDescription(
+            name="Duration in Traffic",
+            icon=ICONS.get(travel_mode),
+            key="",
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=TIME_MINUTES,
+        ),
+        SensorEntityDescription(
+            name="Duration",
+            icon=ICONS.get(travel_mode),
+            key="",
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=TIME_MINUTES,
+        ),
+        SensorEntityDescription(
+            name="Distance",
+            icon=ICONS.get(travel_mode),
+            key="",
+            state_class=SensorStateClass.MEASUREMENT,
+            device_class=SensorDeviceClass.DISTANCE,
+            native_unit_of_measurement=LENGTH_KILOMETERS,
+        ),
+    )
 
 
 def convert_time_to_utc(timestr):

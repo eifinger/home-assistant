@@ -83,5 +83,11 @@ AVOID = ["tolls", "highways", "ferries", "indoor"]
 TRANSIT_PREFS = ["less_walking", "fewer_transfers"]
 TRANSPORT_TYPE = ["bus", "subway", "train", "tram", "rail"]
 TRAVEL_MODE = ["driving", "walking", "bicycling", "transit"]
+ICONS = {
+    "driving": "mdi:car",
+    "walking": "mdi:walk",
+    "bicycling": "mdi:bike",
+    "transit": "mdi:bus",
+}
 TRAVEL_MODEL = ["best_guess", "pessimistic", "optimistic"]
 UNITS = [CONF_UNIT_SYSTEM_METRIC, CONF_UNIT_SYSTEM_IMPERIAL]
